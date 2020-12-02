@@ -1,0 +1,13 @@
+## 1-1遇到的问题
+### 1-1-1 elint+prettier的配合使用
+### 1-1-2 解决方法
+#### 参考官方文档与编程规范与代码风格设置配置文件
+#### vsCode编辑器可安装vetur eslint prettier插件 配置onsave 自动格式化代码   注意三者的规则设置冲突.   
+
+### 1-1-2 icon的使用
+#### svg-icon 雪碧图概念(参考博文https://www.zhangxinxu.com/wordpress/2014/07/introduce-svg-sprite-technology/?spm=a313x.7781069.1998910419.50) @font-face 
+#### 三种使用方法 unicode font-class symbol
+### 解决:
+#### 项目使用symbol用法(参考https://juejin.cn/post/6844903517564436493#heading-5)
+
+
