@@ -9,5 +9,50 @@
 #### 三种使用方法 unicode font-class symbol
 ### 解决:
 #### 项目使用symbol用法(参考https://juejin.cn/post/6844903517564436493#heading-5)
+批量导入
+模块上下文 
+require("dir"+name+"ext")    参数中表达式request
+require.context(directory, useSubdirectories = false, regExp = /^\.\//)   参数必须是字面量
+上下文模块包含一个 map 对象，会把 request 中所有模块转译成对应的模块 id。
+形如:
+{
+    "./table.ejs": 42,
+    "./table-row.ejs": 43,
+    "./directory/folder.ejs": 44
+}
+调用模块上下文require.context(....)返回一个函数
+ƒ webpackContext(request) {
+	var id = webpackContextResolve(request);
+	return __webpack_require__(id);
+}
+webpackContext有3个属性： keys, resolve, id。
+webpackContext.keys是一个函数
+ƒ webpackContextKeys() {
+	return Object.keys(map);//返回一个数组，所有可能被上下文模块处理的请求(request).
+}
+webpackContext.resolve 是一个函数
+webpackContext.resolve = webpackContext;
+ƒ webpackContextResolve(request) {
+	if(!__webpack_require__.o(map, request)) {
+		var e = new Error("Cannot find module '" + request + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[request];//返回请求(request)被解析后得到的模块id
+}
+id 是上下文模块里面所包含的模块id. 它可能在你使用 module.hot.accept 的时候被用到。
+module.exports = webpackContext;
+webpackContext.id = "./src/icons/svg sync \\.svg$";
+因此批量导入模块可以:
+const requireContext=require.context(dir,false/true,regex)  
+//map() 方法创建一个新数组，其结果是该数组中的每个元素是调用一次提供的函数后的返回值。
+//var new_array = arr.map(function callback(currentValue[, index[, array]]) {
+ // Return element for new_array 
+}
+const importAll=webpackContext=>webpackContext.keys().map(webpackContext)//map传入webpackContext回调函数 有一个参数request
+importAll(requireContext)
 
-
+相当于执行了
+requireContext.keys().map(requireContext)
+//而requireContext(request)返回__webpack_require__(id) webpack打包后的模块
+//所以最终返回一个包含Module的数组[Module, Module, Module, ...]
