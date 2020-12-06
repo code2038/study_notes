@@ -56,3 +56,4 @@ importAll(requireContext)
 requireContext.keys().map(requireContext)
 //而requireContext(request)返回__webpack_require__(id) webpack打包后的模块
 //所以最终返回一个包含Module的数组[Module, Module, Module, ...]
+使用svg-sprite-loader
